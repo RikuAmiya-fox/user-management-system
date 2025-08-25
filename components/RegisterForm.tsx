@@ -2,7 +2,14 @@
 
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { TextField, Button, Box, Typography, Alert } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Alert,
+  Stack,
+} from "@mui/material";
 import { createUser } from "../utils/api";
 
 // 必要に応じて利用する
@@ -52,12 +59,26 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
         新規登録
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField {...register("name")} placeholder="名前" fullWidth></TextField>
-        <TextField {...register("email")} placeholder="メール" fullWidth></TextField>
-        <TextField {...register("role")} placeholder="役職" fullWidth></TextField>
-        <Button type="submit" variant="contained" fullWidth>
-          登録
-        </Button>
+        <Stack spacing={2}>
+          <TextField
+            {...register("name")}
+            placeholder="名前"
+            fullWidth
+          ></TextField>
+          <TextField
+            {...register("email")}
+            placeholder="メール"
+            fullWidth
+          ></TextField>
+          <TextField
+            {...register("role")}
+            placeholder="役職"
+            fullWidth
+          ></TextField>
+          <Button type="submit" variant="contained" fullWidth>
+            登録
+          </Button>
+        </Stack>
       </form>
     </Box>
   );
