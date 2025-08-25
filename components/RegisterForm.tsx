@@ -52,10 +52,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
         新規登録
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField {...register("name")} placeholder="名前"></TextField>
-        <TextField {...register("email")} placeholder="メール"></TextField>
-        <TextField {...register("role")} placeholder="役職"></TextField>
-        <Button type="submit" variant="contained">
+        <TextField {...register("name")} placeholder="名前" fullWidth></TextField>
+        <TextField {...register("email")} placeholder="メール" fullWidth></TextField>
+        <TextField {...register("role")} placeholder="役職" fullWidth></TextField>
+        <Button type="submit" variant="contained" fullWidth>
           登録
         </Button>
       </form>
