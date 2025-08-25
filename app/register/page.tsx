@@ -11,11 +11,11 @@ import { useRouter } from "next/navigation";
 const RegisterPage: React.FC = () => {
   const router = useRouter();
 
-  const hundleSuccess = () => {
+  const handleSuccess = () => {
     console.log("登録成功");
     router.push("/users");
   };
-  const hundleError = () => {
+  const handleError = () => {
     console.log("エラー");
   };
   return (
@@ -24,7 +24,7 @@ const RegisterPage: React.FC = () => {
         ユーザー新規登録
       </Typography>
       <Box>
-        <RegisterForm onSuccess={hundleSuccess} onError={hundleError} />
+        <RegisterForm onSuccess={handleSuccess} onError={handleError} />
       </Box>
     </Box>
   );
