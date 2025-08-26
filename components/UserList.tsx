@@ -1,7 +1,7 @@
 "use client";
 
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import UserCard from "./UserCard";
 import { User } from "../types/User";
 
@@ -10,10 +10,16 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps> = ({ users }) => {
+  const [usersList, setUsersList] = useState<User[]>(users);
+
+  const handleDelete = (deletedId: number) => {
+    setUsersList((filterUsers) => filterUsers.filter((user) => user.id !== deletedId));
+  };
+
   return (
     <Box>
-      {users.map((user) => (
-        <UserCard key={user.id} user={user} />
+      {usersList.map((user) => (
+        <UserCard key={user.id} user={user} onDelete={handleDelete} />
       ))}
     </Box>
   );
