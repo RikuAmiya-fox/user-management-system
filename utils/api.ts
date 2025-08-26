@@ -4,7 +4,8 @@ import { supabase } from './supabaseClient';
 export const fetchUsers = async (): Promise<User[]> => {
   const { data, error } = await supabase
     .from('dev_users')
-    .select('*');
+    .select('*')
+    .eq('deleted', false);
 
   if (error) {
     throw error;
@@ -67,4 +68,19 @@ export const deleteUser = async (id: number): Promise<void> => {
   if (error) {
     throw error;
   }
+};
+
+export const softDeleteUser = async (id: number): Promise<User> => {
+  const { data, error } = await supabase
+    .from('dev_users')
+    .update({deleted: true})
+    .eq('id', id)
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data as User;
 };
