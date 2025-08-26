@@ -2,7 +2,7 @@
 
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import UserCard from "../../components/UserCard";
+import UserList from "../../components/UserList";
 import { User } from "../../types/User";
 import { fetchUsers } from "../../utils/api";
 
@@ -40,9 +40,7 @@ const UsersPage: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         ユーザー一覧
       </Typography>
-      {users.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
+      <UserList users={users} />
     </Box>
   );
 };

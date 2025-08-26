@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import UserCard from "./UserCard";
 import { User } from "../types/User";
@@ -12,9 +12,6 @@ interface UserListProps {
 const UserList: React.FC<UserListProps> = ({ users }) => {
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        ユーザー一覧
-      </Typography>
       {users.map((user) => (
         <UserCard key={user.id} user={user} />
       ))}
