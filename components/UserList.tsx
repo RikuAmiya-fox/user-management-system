@@ -6,6 +6,7 @@ import { User } from "../types/User";
 import CustomCard from "./parts/CustomCard";
 import CustomButton from "./parts/CustomButton";
 import { softDeleteUser } from "@/utils/api";
+import CustomModal from "./parts/CustomModal";
 
 interface UserListProps {
   users: User[];
@@ -13,17 +14,18 @@ interface UserListProps {
 
 const UserList: React.FC<UserListProps> = ({ users }) => {
   const [usersList, setUsersList] = useState<User[]>(users);
+  const [confirmId, setConfirmId] = useState<Number | null>(null);
 
   const handleSoftDelete = async (deleteUserID: number) => {
     try {
-      if (confirm("本当にこのユーザーを削除しますか？")) {
-        await softDeleteUser(deleteUserID);
-        setUsersList((filterUsers) =>
-          filterUsers.filter((user) => user.id !== deleteUserID)
-        );
-      }
+      await softDeleteUser(deleteUserID);
+      setUsersList((filterUsers) =>
+        filterUsers.filter((user) => user.id !== deleteUserID)
+      );
     } catch (e) {
       console.log("ユーザーの削除に失敗しました。" + e);
+    } finally {
+      setConfirmId(null);
     }
   };
 
@@ -58,10 +60,19 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
               </Button>
               <CustomButton
                 variantType="danger"
-                onClick={() => handleSoftDelete(user.id)}
+                onClick={() => {
+                  setConfirmId(user.id);
+                }}
               >
                 削除
               </CustomButton>
+              <CustomModal
+                open={confirmId === user.id}
+                title={"COUTION!!"}
+                content={"本当にこのユーザーを削除しますか？"}
+                onClose={() => setConfirmId(null)}
+                onConfirm={() => handleSoftDelete(user.id)}
+              />
             </>
           }
         />
