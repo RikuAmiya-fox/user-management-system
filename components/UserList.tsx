@@ -32,9 +32,16 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+        gap: 2,
+      }}
+    >
       {usersList.map((user, index) => (
         <CustomCard
+          index={index + 1}
           variant={index % 2 !== 0 ? "odd" : undefined}
           key={user.id}
           title={user.name}

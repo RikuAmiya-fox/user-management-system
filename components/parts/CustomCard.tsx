@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Card, CardContent, Typography, CardActions } from "@mui/material";
+import { WidthFull } from "@mui/icons-material";
 
 // TODO: インターフェースを修正
 interface CustomCardProps {
@@ -9,6 +10,7 @@ interface CustomCardProps {
   description: React.ReactNode;
   actions?: React.ReactNode;
   variant?: "odd";
+  index?: number;
 }
 
 const CustomCard: React.FC<CustomCardProps> = ({
@@ -16,9 +18,13 @@ const CustomCard: React.FC<CustomCardProps> = ({
   description,
   actions,
   variant,
+  index,
 }) => {
   const cardStyle = {
+    position: "relative",
     minWidth: 275,
+    width: "100%",
+    aspectRatio: "1 / 0.6",
     mb: 2,
     boxshadow: "0 0 3px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.22)",
     transition: ".3s",
@@ -32,6 +38,19 @@ const CustomCard: React.FC<CustomCardProps> = ({
 
   return (
     <Card sx={cardStyle}>
+      {index && (
+        <Typography
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 16,
+            color: "grey.500",
+            fontWeight: "bold",
+          }}
+        >
+          {index}
+        </Typography>
+      )}
       <CardContent>
         {/*TODO: [titel]と[description]を表示*/}
         <Typography variant="h5" component="div">
