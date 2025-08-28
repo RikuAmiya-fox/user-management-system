@@ -13,10 +13,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
   borderRadius: "8px",
@@ -77,6 +73,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
       open={open}
       onClose={onClose}
       closeAfterTransition
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
       slotProps={{
         backdrop: {
           sx: {
@@ -86,9 +87,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       }}
     >
       {transitionType === "fade" ? (
-        <Fade in={open}>
-          {modalContent}
-        </Fade>
+        <Fade in={open}>{modalContent}</Fade>
       ) : (
         <Slide direction="down" in={open}>
           {modalContent}
