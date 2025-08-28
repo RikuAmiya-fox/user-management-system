@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Button, ButtonProps } from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 interface CustomButtonProps extends ButtonProps {
   variantType?: "primary" | "secondary" | "danger" | "gradation";

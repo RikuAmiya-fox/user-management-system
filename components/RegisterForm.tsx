@@ -3,12 +3,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
-  TextField,
-  Button,
-  Box,
-  Typography,
-  Alert,
-  Stack,
+  TextField, Box, Stack
 } from "@mui/material";
 import { createUser } from "../utils/api";
 import CustomCard from "./parts/CustomCard";
@@ -27,7 +22,7 @@ interface RegisterFormProps {
   disabled?: boolean;
 }
 
-const roleOptions = [
+export const roleOptions = [
   "研修生",
   "プログラマー",
   "SE",

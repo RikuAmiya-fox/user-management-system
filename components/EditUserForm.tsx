@@ -4,11 +4,12 @@
 
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { TextField, Button, Box, Typography, Stack } from "@mui/material";
+import { TextField, Box, Stack } from "@mui/material";
 import { fetchUserById, updateUser } from "../utils/api";
 import { User } from "../types/User";
 import CustomButton from "./parts/CustomButton";
 import CustomCard from "./parts/CustomCard";
+import { roleOptions } from "./RegisterForm";
 
 // 必要に応じて利用する
 interface EditUserFormInputs {
@@ -24,17 +25,6 @@ interface EditUserFormProps {
   disabled?: boolean;
 }
 
-const roleOptions = [
-  "研修生",
-  "プログラマー",
-  "SE",
-  "PL",
-  "PM",
-  "EM",
-  "事務",
-  "人事",
-  "その他",
-];
 
 // TODO: ユーザー編集フォームコンポーネントを実装する
 const EditUserForm: React.FC<EditUserFormProps> = ({
