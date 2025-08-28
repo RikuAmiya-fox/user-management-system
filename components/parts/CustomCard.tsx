@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Card, CardContent, Typography, CardActions } from "@mui/material";
-import { WidthFull } from "@mui/icons-material";
+import { Padding, WidthFull } from "@mui/icons-material";
 
 // TODO: インターフェースを修正
 interface CustomCardProps {
@@ -24,7 +24,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
     position: "relative",
     minWidth: 275,
     width: "100%",
-    aspectRatio: "1 / 0.6",
+    padding: "8px",
     mb: 2,
     boxshadow: "0 0 3px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.22)",
     transition: ".3s",
@@ -56,7 +56,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
         <Typography variant="h5" component="div">
           {title}
         </Typography>
-        <Typography variant="body1"> {description}</Typography>
+        <Typography component="div" variant="body1"> {description}</Typography>
       </CardContent>
       {actions && <CardActions>{actions}</CardActions>}
     </Card>

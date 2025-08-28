@@ -25,16 +25,24 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     transition: "transform 0.15s ease-out, box-shadow 0.15s ease-out",
 
     "&:hover": {
-      boxShadow: `0px 4px 0px 0px #221815`,
+      boxShadow: `0px 4px 0px 0px #58514fff`,
       ...(variantType === "primary" && {
-        backgroundColor: "#2b89f5ff",
+        backgroundColor: "#2196f3",
+        color: "#ffffff",
+      }),
+      ...(variantType === "secondary" && {
+        backgroundColor: "#f50057",
+        color: "#ffffff",
+      }),
+      ...(variantType === "danger" && {
+        backgroundColor: "#ff5722",
         color: "#ffffff",
       }),
     },
 
     "&:active": {
       transform: "translateY(2px)",
-      boxShadow: `0px 1px 0px 0px #221815`,
+      boxShadow: `0px 1px 0px 0px #58514fff`,
     },
 
     ...(variantType === "gradation" && {
