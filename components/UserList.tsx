@@ -7,6 +7,8 @@ import CustomCard from "./parts/CustomCard";
 import CustomButton from "./parts/CustomButton";
 import { softDeleteUser } from "@/utils/api";
 import CustomModal from "./parts/CustomModal";
+import Image from "next/image";
+import typingImage from "../components/parts/image/神速の打鍵術師_20250827130703.jpg";
 
 interface UserListProps {
   users: User[];
@@ -31,8 +33,9 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
 
   return (
     <Box>
-      {usersList.map((user) => (
+      {usersList.map((user, index) => (
         <CustomCard
+          variant={index % 2 !== 0 ? "odd" : undefined}
           key={user.id}
           title={user.name}
           description={

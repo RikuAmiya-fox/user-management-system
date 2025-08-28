@@ -45,3 +45,32 @@ export const Default: Story = {
     );
   },
 };
+
+
+export const backgroundColor: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <Box>
+        {/* TODO: クリックでモーダル開閉させる */}
+        <CustomButton variantType="primary" onClick={() => setOpen(true)}>
+          モーダルを開く
+        </CustomButton>
+        <CustomModal
+          // TODO: Propを渡す
+          open={open}
+          title="サンプルモーダル"
+          content="サンプルです"
+          // onCloceはsetOpenにfalseを渡す
+          onClose={() => setOpen(false)}
+          // onConfirmはalert()を使ってクリックしたことを知らせてsetOpenにfalseを渡す
+          onConfirm={() => {
+            alert("クリックされました");
+            setOpen(false);
+          }}
+        />
+      </Box>
+    );
+  },
+};
