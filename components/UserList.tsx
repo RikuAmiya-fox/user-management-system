@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Link, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Link,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { User } from "../types/User";
 import CustomCard from "./parts/CustomCard";
@@ -22,6 +29,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   const [selectRole, setSelectRole] = useState<string>("");
   const [selectId, setSelectId] = useState<string>("");
 
+  //論理削除処理
   const handleSoftDelete = async (deleteUserID: number) => {
     try {
       await softDeleteUser(deleteUserID);
@@ -35,11 +43,13 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
     }
   };
 
+  //ユーザー詳細画面へ遷移処理
   const handleDetail = (userId: number) => {
     setDetailId(null);
     router.push(`/users/${userId}/details`);
   };
 
+  //検索機能のプルダウン表示
   const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectRole(event.target.value);
   };
@@ -47,6 +57,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
     setSelectId(event.target.value);
   };
 
+  //検索機能のフィルター表示
   const filteredUsers = usersList
     .filter((user) => {
       return selectRole ? user.role === selectRole : true;
@@ -55,6 +66,16 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
       return selectId ? user.id === Number(selectId) : true;
     });
 
+  //昇順・降順のソート処理
+  const ascendingUser = () => {
+    const sortedUsers = [...usersList].sort((a, b) => a.id - b.id);
+    setUsersList(sortedUsers);
+  };
+  const descendingUser = () => {
+    const sortedUsers =  [...usersList].sort((a, b) => b.id - a.id);
+    setUsersList(sortedUsers)
+  };
+  
   return (
     <>
       <Box sx={{ display: "flex", gap: 2, m: 2 }}>
@@ -96,6 +117,8 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
             </MenuItem>
           ))}
         </TextField>
+        <Button size="medium" variant="contained" color="primary" onClick={ascendingUser}>昇順</Button>
+        <Button size="medium" variant="contained" color="secondary"onClick={descendingUser}>降順</Button>
       </Box>
 
       <Box
