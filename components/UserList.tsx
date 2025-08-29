@@ -3,12 +3,13 @@
 import {
   Box,
   Button,
+  Icon,
   Link,
   MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { User } from "../types/User";
 import CustomCard from "./parts/CustomCard";
 import CustomButton from "./parts/CustomButton";
@@ -16,6 +17,7 @@ import { softDeleteUser } from "@/utils/api";
 import CustomModal from "./parts/CustomModal";
 import { useRouter } from "next/navigation";
 import { roleOptions } from "./RegisterForm";
+import SearchIcon from "@mui/icons-material/Search";
 
 interface UserListProps {
   users: User[];
@@ -28,6 +30,9 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   const [detailId, setDetailId] = useState<number | null>(null);
   const [selectRole, setSelectRole] = useState<string>("");
   const [selectId, setSelectId] = useState<string>("");
+  const [freeWord, setFreeWord] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
+  const [list, setList] = useState<string>("ask");
 
   //論理削除処理
   const handleSoftDelete = async (deleteUserID: number) => {
@@ -43,7 +48,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
     }
   };
 
-  //ユーザー詳細画面へ遷移処理
+  //ユーザー詳細画面へ遷移
   const handleDetail = (userId: number) => {
     setDetailId(null);
     router.push(`/users/${userId}/details`);
@@ -64,23 +69,43 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
     })
     .filter((user) => {
       return selectId ? user.id === Number(selectId) : true;
+    })
+    .filter((user) => {
+      return user.name.includes(search);
     });
 
+  //検索のリセット機能
+  const resetFilter = () => {
+    setSelectRole("");
+    setSelectId("");
+    setFreeWord("");
+    setSearch("");
+  };
+
+  //フリーワード検索
+  const handleValueChange = (e: any) => {
+    setFreeWord(e.target.value);
+  };
+  const handleSearch = () => {
+    setSearch(freeWord);
+  };
+
   //昇順・降順のソート処理
-  const ascendingUser = () => {
-    const sortedUsers = [...usersList].sort((a, b) => a.id - b.id);
-    setUsersList(sortedUsers);
-  };
-  const descendingUser = () => {
-    const sortedUsers =  [...usersList].sort((a, b) => b.id - a.id);
-    setUsersList(sortedUsers)
-  };
-  
+  useEffect(() => {
+    if (list === "ask") {
+      const sortedUsers = [...usersList].sort((a, b) => a.id - b.id);
+      setUsersList(sortedUsers);
+    } else if (list === "desk") {
+      const sortedUsers = [...usersList].sort((a, b) => b.id - a.id);
+      setUsersList(sortedUsers);
+    }
+  }, [list]);
+
   return (
     <>
       <Box sx={{ display: "flex", gap: 2, m: 2 }}>
         <TextField
-          sx={{ width: 300 }}
+          sx={{ width: 200 }}
           size="medium"
           id="role-selectbox"
           label="検索：役職"
@@ -99,7 +124,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
           ))}
         </TextField>
         <TextField
-          sx={{ width: 300 }}
+          sx={{ width: 200 }}
           size="medium"
           id="id-selectbox"
           label="検索：ID"
@@ -117,8 +142,40 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
             </MenuItem>
           ))}
         </TextField>
-        <Button size="medium" variant="contained" color="primary" onClick={ascendingUser}>昇順</Button>
-        <Button size="medium" variant="contained" color="secondary"onClick={descendingUser}>降順</Button>
+        <TextField
+          value={freeWord}
+          label="名前検索"
+          onChange={handleValueChange}
+        />
+        <Button startIcon={<SearchIcon />} onClick={handleSearch} />
+        <Button
+          size="medium"
+          variant="contained"
+          color="error"
+          onClick={resetFilter}
+        >
+          検索リセット
+        </Button>
+        <Button
+          size="medium"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            setList("ask");
+          }}
+        >
+          昇順
+        </Button>
+        <Button
+          size="medium"
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            setList("desk");
+          }}
+        >
+          降順
+        </Button>
       </Box>
 
       <Box
@@ -165,6 +222,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                   <CustomModal
                     open={detailId === user.id}
                     title={"ユーザー詳細"}
+                    confirmWord="詳細はこちら"
                     content={
                       <>
                         ID：{user.id}
@@ -186,7 +244,6 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                   >
                     編集
                   </CustomButton>
-
                   <CustomButton
                     variantType="danger"
                     onClick={() => {

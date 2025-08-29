@@ -24,6 +24,8 @@ interface CustomModalProps {
   open: boolean;
   title: string;
   content: React.ReactNode;
+  confirmWord?: string;
+  cancelWord?: string;
   onClose: () => void;
   onConfirm?: () => void;
   transitionType?: "slide" | "fade";
@@ -34,6 +36,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
   open,
   title,
   content,
+  confirmWord = "確認",
+  cancelWord = "キャンセル",
   onClose,
   onConfirm,
   transitionType = "slide",
@@ -58,11 +62,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
       <Typography sx={{ mt: 2 }}>{content}</Typography>
       <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
         <Button onClick={onClose} sx={{ mr: 2 }}>
-          キャンセル
+          {cancelWord}
         </Button>
         {onConfirm && (
           <Button variant="contained" color="primary" onClick={onConfirm}>
-            確認
+            {confirmWord}
           </Button>
         )}
       </Box>
